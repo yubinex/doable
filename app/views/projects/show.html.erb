@@ -1,11 +1,40 @@
-<h1><%= @project.name %></h1>
-<ul>
-  <% @project.todos.each do |todo| %>
-    <li>
-      <%= link_to todo.name, todo_path(todo) %>
-      <% if todo.completed %>✅<% end %>
-    </li>
-  <% end %>
-</ul>
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-white"><%= @project.name %></h1>
+    <div class="flex space-x-3">
+      <%= link_to "Edit", edit_project_path(@project), class: "inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-lg text-gray-300 hover:text-white hover:border-gray-600 transition-colors" %>
+      <%= button_to "Delete Project", project_path(@project), method: :delete, class: "inline-flex items-center px-4 py-2 border border-red-700 text-sm font-medium rounded-lg text-red-300 hover:text-red-200 hover:border-red-600 transition-colors", data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
 
-<%= button_to "Delete Project", project_path(@project), method: :delete %>
+  <div class="bg-gray-900/50 border border-gray-800/50 rounded-lg p-6 backdrop-blur-sm">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold text-white">Todos</h2>
+      <%= link_to "Add Todo", new_todo_path(project_id: @project.id), class: "inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-black bg-white hover:bg-gray-200 transition-colors" %>
+    </div>
+    
+    <% if @project.todos.any? %>
+      <div class="space-y-3">
+        <% @project.todos.each do |todo| %>
+          <div class="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
+            <div class="flex items-center space-x-3">
+              <% if todo.completed %>
+                <span class="text-green-400 text-lg">✅</span>
+              <% else %>
+                <span class="w-4 h-4 border border-gray-600 rounded"></span>
+              <% end %>
+              <%= link_to todo.name, todo_path(todo), class: "text-gray-300 hover:text-white transition-colors #{todo.completed ? 'line-through opacity-60' : ''}" %>
+            </div>
+            <% if todo.priority %>
+              <span class="px-2 py-1 text-xs font-medium bg-orange-900/30 text-orange-300 rounded-full border border-orange-800/30">
+                Priority: <%= todo.priority %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-400 text-center py-8">No todos yet. Add one to get started!</p>
+    <% end %>
+  </div>
+</div>

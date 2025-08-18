@@ -1,26 +1,27 @@
-<div id="<%= dom_id todo %>">
-  <p>
-    <strong>Name:</strong>
-    <%= todo.name %>
-  </p>
+<div id="<%= dom_id todo %>" class="space-y-3">
+  <div class="flex items-center justify-between">
+    <h3 class="text-lg font-semibold text-white"><%= todo.name %></h3>
+    <div class="flex items-center space-x-2">
+      <% if todo.completed %>
+        <span class="text-green-400 text-lg">✅</span>
+        <span class="px-2 py-1 text-xs font-medium bg-green-900/30 text-green-300 rounded-full border border-green-800/30">Completed</span>
+      <% else %>
+        <span class="w-4 h-4 border border-gray-600 rounded"></span>
+      <% end %>
+      <% if todo.priority %>
+        <span class="px-2 py-1 text-xs font-medium bg-orange-900/30 text-orange-300 rounded-full border border-orange-800/30">
+          Priority <%= todo.priority %>
+        </span>
+      <% end %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Description:</strong>
-    <%= todo.description %>
-  </p>
+  <% if todo.description.present? %>
+    <p class="text-gray-300 text-sm"><%= todo.description %></p>
+  <% end %>
 
-  <p>
-    <strong>Completed:</strong>
-    <%= todo.completed %>
-  </p>
-
-  <p>
-    <strong>Priority:</strong>
-    <%= todo.priority %>
-  </p>
-
-  <p>
-    <strong>Project:</strong>
-    <%= link_to todo.project.name, project_path(todo.project) %>
-  </p>
+  <div class="flex items-center text-xs text-gray-400">
+    <span>Project:</span>
+    <%= link_to todo.project.name, project_path(todo.project), class: "ml-1 text-blue-400 hover:text-blue-300 transition-colors" %>
+  </div>
 </div>

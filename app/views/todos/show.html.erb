@@ -1,9 +1,18 @@
-<%= render @todo %>
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-white">Todo Details</h1>
+    <div class="flex space-x-3">
+      <%= link_to "Edit", edit_todo_path(@todo), class: "inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-lg text-gray-300 hover:text-white hover:border-gray-600 transition-colors" %>
+      <%= button_to "Delete", @todo, method: :delete, class: "inline-flex items-center px-4 py-2 border border-red-700 text-sm font-medium rounded-lg text-red-300 hover:text-red-200 hover:border-red-600 transition-colors", data: { confirm: "Are you sure?" } %>
+    </div>
+  </div>
 
-<div>
-  <%= link_to "Edit this todo", edit_todo_path(@todo) %>
-  |
-  <%= link_to "Back to todos", todos_path %>
+  <div class="bg-gray-900/50 border border-gray-800/50 rounded-lg p-6 backdrop-blur-sm">
+    <%= render @todo %>
+  </div>
 
-  <%= button_to "Destroy this todo", @todo, method: :delete %>
+  <div class="flex space-x-3">
+    <%= link_to "Back to todos", todos_path, class: "inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-lg text-gray-300 hover:text-white hover:border-gray-600 transition-colors" %>
+    <%= link_to "Back to project", project_path(@todo.project), class: "inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-lg text-gray-300 hover:text-white hover:border-gray-600 transition-colors" %>
+  </div>
 </div>
